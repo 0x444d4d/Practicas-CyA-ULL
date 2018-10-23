@@ -39,21 +39,19 @@ void sorted_vector_t::merge_sort(int l, int r)
 }
 
 
-//----------Modificacion 2 Merge_sort recursivo {{{
+//----------Modificacion 2 Merge_sort iterativo {{{
 
 void sorted_vector_t::merge_sort_it(void)
 {
   int r, l;
-  for (unsigned _size = 1; _size < size(); _size *= 2) {
+  for (unsigned _size = 1; _size < size(); _size *= 2) 
     for (unsigned l = 0; l < size(); l += 2*_size) {
       r = (l + 2*_size - 1) < size() ? (l + 2*_size -1) : (size() -1);
-
-      merge(l, (l+r)/2, r);
+      ((l + _size -1 ) < size()) ? merge(l, l + _size - 1, r) : merge(l, (l+r)/2, r);
     }  
-  }   
 }
 
-//----------Fin modificacion 2 Merge_sort recursivo }}}
+//----------Fin modificacion 2 Merge_sort iterativo }}}
 
 
 
