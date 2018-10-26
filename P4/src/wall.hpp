@@ -13,7 +13,7 @@ class wall_t {
   private:
 
     unsigned height, length;
-    std::vector<std::vector<bool> > strings;
+    std::vector<std::vector<int> > strings;
 
   public:
 
@@ -28,9 +28,9 @@ class wall_t {
 
   private:
 
-    void generate_rows(std::vector<bool> &aux, unsigned size);
-    std::ostream& write(std::ostream& os, std::vector<bool> v);
-    void push_string(std::vector<bool> aux, int pos);
+    void generate_rows(std::vector<int> &aux, unsigned len = 0);
+    std::ostream& write(std::ostream& os, std::vector<int> v);
+    void push_string(std::vector<int> aux);
 
 
 };

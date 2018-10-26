@@ -7,8 +7,6 @@ namespace CyA
   wall_t::wall_t(int x, int y) {
     height = y; length = x;
 
-    strings.resize(1 << x);
-
     std::cout << strings.size() << std::endl;
     std::cin.get();
     
@@ -20,43 +18,47 @@ namespace CyA
     //Tambien hay que cacular mediante el metodo 
     //generate_rows las cadenas de tamaño
     //x = length posibles y guardarlas en strings.
-  
   }
 
 
   void wall_t::generate_rows(void) {
-    std::vector<bool> aux(get_x());
-    generate_rows(aux, get_x());
+    std::vector<int> aux;
+    generate_rows(aux);
   }
 
 
-  void wall_t::generate_rows(std::vector<bool> &aux, unsigned size) {
-    static unsigned pos = 0;
+  void wall_t::generate_rows(std::vector<int> &aux, unsigned len) {
 
-    if (size <= 0) {
-      ++pos;
-      push_string(aux, pos);
+    if (len >= get_x()) {
+      if (len == get_x()){
+        push_string(aux);
+        write(std::cout, aux);
+        std::cin.get();
+      }
+      return;
+    } 
 
-    }
+    aux.push_back(2);
+    generate_rows(aux, len+=2);
+    aux.pop_back();
+    len -=2;
 
-    aux[size-1] = 1;
-    generate_rows(aux, size - 1);
-    aux[size-1] = 0;
-    generate_rows(aux, size - 1);
-
+    aux.push_back(3);
+    generate_rows(aux, len+=3);
+    aux.pop_back();
+    len -=3;
+    
   }
 
-  void wall_t::push_string( std::vector<bool> aux, int pos ) {
-    write(std::cout, aux);
-
-    strings[pos] = aux;
-    std::cin.get();
-  
-  
+  //PENDIENTE!!!
+  //
+  //Pasar a hpp.
+  void wall_t::push_string( std::vector<int> aux) {
+    strings.push_back(aux);
   }
 
 
-  std::ostream& wall_t::write(std::ostream& os, std::vector<bool> v) {
+  std::ostream& wall_t::write(std::ostream& os, std::vector<int> v) {
     for (int inx = 0; inx < v.size(); ++inx)   
       os << v[inx] << " ";
   }

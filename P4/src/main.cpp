@@ -8,5 +8,9 @@ int main(void) {
   std::vector<bool> aux;
   muro.generate_rows();
 
+
+  std::cout << "Fin del programa" << std::endl;
+  std::cin.get();
+
 } 
 
