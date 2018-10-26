@@ -34,11 +34,9 @@ namespace CyA
     static unsigned pos = 0;
 
     if (size <= 0) {
-      strings[pos] = aux;
       ++pos;
+      push_string(aux, pos);
 
-      write(std::cout, aux);
-      std::cin.get();
     }
 
     aux[size-1] = 1;
@@ -46,6 +44,15 @@ namespace CyA
     aux[size-1] = 0;
     generate_rows(aux, size - 1);
 
+  }
+
+  void wall_t::push_string( std::vector<bool> aux, int pos ) {
+    write(std::cout, aux);
+
+    strings[pos] = aux;
+    std::cin.get();
+  
+  
   }
 
 

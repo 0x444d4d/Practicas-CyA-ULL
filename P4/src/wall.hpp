@@ -30,6 +30,7 @@ class wall_t {
 
     void generate_rows(std::vector<bool> &aux, unsigned size);
     std::ostream& write(std::ostream& os, std::vector<bool> v);
+    void push_string(std::vector<bool> aux, int pos);
 
 
 };
