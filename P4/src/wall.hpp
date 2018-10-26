@@ -14,6 +14,7 @@ class wall_t {
 
     unsigned height, length;
     std::vector<std::vector<int> > strings;
+    std::vector<std::vector<int> >compatibles;
 
   public:
 
@@ -26,11 +27,14 @@ class wall_t {
 
     void generate_rows(void);
 
+
   private:
 
-    void generate_rows(std::vector<int> &aux, unsigned len = 0);
     std::ostream& write(std::ostream& os, std::vector<int> v);
+    void generate_rows(std::vector<int> &aux, unsigned len = 0);
     void push_string(std::vector<int> aux);
+    void compute_compatibles(void);
+    int min( std::vector<int> x, std::vector<int> y );
 
 
 };

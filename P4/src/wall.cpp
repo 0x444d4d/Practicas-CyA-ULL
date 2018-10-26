@@ -50,11 +50,36 @@ namespace CyA
     
   }
 
+
   //PENDIENTE!!!
   //
   //Pasar a hpp.
   void wall_t::push_string( std::vector<int> aux) {
     strings.push_back(aux);
+  }
+
+  int wall_t::min( std::vector<int> x, std::vector<int> y ) {
+    return (x.size() < y.size()) ? x.size() : y.size();
+  }
+
+
+  void wall_t::compute_compatibles(void) {
+    int sum0 = 0; 
+    int sum1 = 0;
+
+    for (int sel = 0; sel < strings.size(); ++sel)
+      for (int row = 0; row < strings.size(); ++row)
+        for (int col = 0; ; ++col) {
+          if (sel != row) {
+            sum0 += strings[sel][col];
+            sum1 += strings[row][col];
+
+            if (sum0 != sum1 && col == min(strings[row], strings[sel])) {
+              compatibles[sel].push_back(row);
+            }
+
+          }
+        }  
   }
 
 
