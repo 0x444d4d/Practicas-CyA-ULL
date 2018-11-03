@@ -7,59 +7,42 @@ namespace CyA
   wall_t::wall_t(int x, int y) {
     height = y; length = x;
 
-    std::cout << strings.size() << std::endl;
-    std::cin.get();
-    
-    //calculamos el numero de soluciones posibles 
-    //y redimensionamos el vector de soluciones para
-    //acomodarlas.
-    
-
-    //Tambien hay que cacular mediante el metodo 
-    //generate_rows las cadenas de tamaño
-    //x = length posibles y guardarlas en strings.
-  }
-
-
-  void wall_t::generate_rows(void) {
     std::vector<int> aux;
     generate_rows(aux);
+    compute_compatibles();
+
   }
 
 
-  void wall_t::generate_rows(std::vector<int> &aux, unsigned len) {
+  void wall_t::generate_rows(std::vector<int> &aux, int len) {
 
-    if (len >= get_x()) {
-      if (len == get_x()){
-        push_string(aux);
+    if (len >= length) {
+      if (len == length){
         write(std::cout, aux);
-        std::cin.get();
+        strings.push_back(aux);
+        std::cout << std::endl;
       }
-      return;
+    } else {
+      aux.push_back(2);
+      generate_rows(aux, len+=2);
+      aux.pop_back();
+      len -=2;
+
+      aux.push_back(3);
+      generate_rows(aux, len+=3);
+      aux.pop_back();
+      len -=3;
     } 
-
-    aux.push_back(2);
-    generate_rows(aux, len+=2);
-    aux.pop_back();
-    len -=2;
-
-    aux.push_back(3);
-    generate_rows(aux, len+=3);
-    aux.pop_back();
-    len -=3;
-    
   }
 
-
-  //PENDIENTE!!!
-  //
-  //Pasar a hpp.
-  void wall_t::push_string( std::vector<int> aux) {
-    strings.push_back(aux);
-  }
 
   int wall_t::min( std::vector<int> x, std::vector<int> y ) {
     return (x.size() < y.size()) ? x.size() : y.size();
+  }
+
+
+  int wall_t::max( std::vector<int> x, std::vector<int> y ) {
+    return (x.size() < y.size()) ? y.size() : x.size();
   }
 
 
@@ -67,25 +50,37 @@ namespace CyA
     int sum0 = 0; 
     int sum1 = 0;
 
-    for (int sel = 0; sel < strings.size(); ++sel)
-      for (int row = 0; row < strings.size(); ++row)
-        for (int col = 0; ; ++col) {
-          if (sel != row) {
+    compatibles.resize(strings.size());
+
+    for (int sel = 0; sel < strings.size(); ++sel) {
+      for (int row = 0; row < strings.size(); ++row) {
+        for (int col = 0; col < (max(strings[row], strings[sel]) - 1); ++col) {
+
+          //CAmbiar a bitset en msol.cpp/msol.hpp
+          //
             sum0 += strings[sel][col];
+          if (col < strings[row].size())
             sum1 += strings[row][col];
+          if (sum0 == sum1) break;
 
-            if (sum0 != sum1 && col == min(strings[row], strings[sel])) {
-              compatibles[sel].push_back(row);
-            }
-
-          }
-        }  
+        }
+        if (sum0 != sum1) compatibles[sel].push_back(row);
+        sum0 = sum1 = 0;
+      }
+    }
+   
+    for (int index = 0; index < compatibles.size(); ++index ) {
+      std::cout << "Fila " << index << ":  ";
+      write(std::cout, compatibles[index]);
+      std::cout << std::endl;
+    }   
   }
 
 
-  std::ostream& wall_t::write(std::ostream& os, std::vector<int> v) {
+  std::ostream& wall_t::write(std::ostream& os, std::vector<int>& v) {
     for (int inx = 0; inx < v.size(); ++inx)   
       os << v[inx] << " ";
+    return os;
   }
 
 }
