@@ -4,7 +4,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <vector>
-#include "fila-old.hpp"
+#include "fila.hpp"
 
 
 namespace CyA
@@ -15,8 +15,7 @@ class wall_t {
 
     unsigned height, length;
     std::vector<fila> strings;
-    std::vector<std::vector<int> > compatibles;
-    std::vector<std::vector<int> > muros;
+    std::vector<fila> compatibles;
 
   public:
 
@@ -30,11 +29,11 @@ class wall_t {
 
   private:
 
+    //std::ostream& write(std::ostream& os, fila& v);
     void generate_rows(fila &aux, int len = 0);
-    void compute_compatibles(void);
-    void create_wall(void); 
-    void create_wall(std::vector<int> aux, std::vector<bool> visited, int i, int height = 0); 
-    bool match_last(std::vector<int> aux);
+//    void compute_compatibles(void);
+//   int min( std::vector<int> x, std::vector<int> y );
+//  int max( std::vector<int> x, std::vector<int> y );
 
 
 };

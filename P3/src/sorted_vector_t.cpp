@@ -26,7 +26,11 @@ void sorted_vector_t::write(ostream& os) const
 
 void sorted_vector_t::merge_sort(int l, int r)
 {
+
+  static int counter = 0;
+
   if (l < r) {
+    ++counter;
       
     int c = (l + r) / 2;
 
@@ -36,6 +40,8 @@ void sorted_vector_t::merge_sort(int l, int r)
 
       merge(l, c, r);
     }
+
+  std::cout << "No. de llamadas: " << counter << std::endl;
 }
 
 

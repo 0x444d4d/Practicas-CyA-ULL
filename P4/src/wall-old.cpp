@@ -87,6 +87,9 @@ namespace CyA
     for(int row = 0; row < compatibles.size(); ++row)
       create_wall(aux, visited, row);
 
+    std::cout << "Nº de soluciones: " << muros.size();
+    std::cin.get();
+
     for(int row = 0; row < muros.size(); ++row){
       for(int col = 0; col < muros[row].size(); ++col){
         strings[muros[row][col]].print();
