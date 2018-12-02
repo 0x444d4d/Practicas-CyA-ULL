@@ -1,15 +1,26 @@
-#include "nodo.hpp"
+#include "../include/nodo.hpp"
 
 using namespace cya;
 
 bool node_t::is_death( void ) {
-    bool death = true;
+  bool death = true;
 
-    for (auto inx: succesors_) {
-      if( node_ != inx.get_inx() )
-        return false;
-    }   
-    return true;
+  for (auto inx: succesors_) {
+    if( node_ != inx.get_inx() )
+      return false;
+  }   
+  return true;
+}
+
+
+std::vector<unsigned> node_t::get_succesors( char input ) const {
+  std::vector<unsigned> aux;
+
+  for (auto inx: succesors_) {
+    if ( input == inx.get_val() )
+      aux.push_back( inx.get_inx() );
+  }   
+  return aux;
 }
 
 
@@ -19,6 +30,16 @@ unsigned node_t::get_next( char input ) {
       return inx.get_inx();
   }   
   return unsigned( -1 );
+}
+
+
+unsigned node_t::output_degree( char input ) const {
+  unsigned int count = 0;
+  for (auto inx: succesors_) {
+    if ( input == inx.get_val() )
+      ++count;
+  }
+  return count;
 }
 
 

@@ -1,2 +1,8 @@
-all:  automata.hpp nodo.hpp pair_t.hpp main.cpp automata.cpp nodo.cpp
-	g++ -std=c++11 main.cpp automata.cpp nodo.cpp -o automata.out 
+SRC=../src/
+INC=../include/
+CC=g++
+OUT=../bin/automata.out
+MAIN=main.cpp
+
+all:
+	$(CC) -std=c++11 -g $(wildcard $(SRC)*) -o $(OUT)
