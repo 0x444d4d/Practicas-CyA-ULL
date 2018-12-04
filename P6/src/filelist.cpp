@@ -13,7 +13,6 @@ void listaficheros::set_path(string path) {
 
 void listaficheros::update( std::string key) {  
   string aux;
-  int pos = 0;
 
   fileVector_.clear();
 
@@ -21,12 +20,10 @@ void listaficheros::update( std::string key) {
   inFile.open( ( path_ + string("filelist.txt") ).c_str() );
 
   while(inFile >> aux) {
-    pos = aux.find_last_of('.');
     if ( aux.rfind( key ) != string::npos ) 
       fileVector_.push_back(aux);
   }
   inFile.close();
-  
 }
 
 
