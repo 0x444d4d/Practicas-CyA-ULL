@@ -1,4 +1,5 @@
 #include "../include/automata.hpp"
+#include <sstream>
 
 using namespace cya;
 
@@ -6,7 +7,10 @@ typedef std::set<node_t>::iterator iter;
 
 
 void automata_t::load_data( std::string file_name ) {
-  unsigned size, start, end, tran; 
+  std::istringstream input;
+  std::string line;
+
+  unsigned end, tran; 
   unsigned node = 0;
   vector_n suc;
   pair_t<char> aux;
@@ -15,25 +19,80 @@ void automata_t::load_data( std::string file_name ) {
   nodes_.clear();
   set_index_.clear(); 
   
-  file.open( file_name );
+  file.open( file_name ); // Abrimos el fichero dfa.
 
-  file >> size >> init_;
-  size_ = size;
+  //Ahora leemos las dos primeras lineas y almacenamos su informacion.
+  for (int i = 0; i < 3;  ++i) {
+    static bool check = true;
 
-  while ( node < ( size - 1 ) ) {
-    file >> node >> end >> tran;
+    line.clear();
+    input.clear();
+    std::getline( file, line );
+    input.str(line);
 
-    for ( int inx = 0; inx < tran ; ++inx ) {
-      file >> aux.get_val() >> aux.get_inx();
-      languaje_.insert( aux.get_val() );
-      suc.push_back(aux);
-    }   
+    check = true;
+    switch ( i ) {
 
-    nodes_.insert( node_t( start, end, node, suc ) );
-    suc.clear();
-  }
+      case 0:
+        while ( input >> size_ ) {
+          if ( !check ) {
+            std::cout << "Error en la linea 1 del .aut" << std::endl;
+            std::cin.get();
+          }
+          check = false;
+        }
+      break;
 
-  index_set();
+      case 1:
+        while ( input >> init_ ) {
+          if ( !check ) {
+            std::cout << "Error en la linea 2 del .aut" << std::endl;
+            std::cin.get();
+          } 
+          check = false;
+        }
+      break;
+
+      case 2:
+        int count = 0;
+        int count2;
+
+        while ( input >> node >> end >> tran ) {
+          ++count;
+          count2 = 0;
+
+          while ( input >> aux.get_val() >> aux.get_inx() ) {
+
+            if ( count2++ < tran ) {
+              languaje_.insert( aux.get_val() );
+              suc.push_back( aux );
+            } 
+            else {
+              std::cout << "Error en la linea " << count + 2 << " del .aut" << std::endl;
+              std::cout << "Mas transiciones de las especificadas" << std::endl;
+              std::cin.get();
+            }
+
+          }
+          nodes_.insert( node_t( 0, end, node, suc ) );
+          suc.clear();
+
+          line.clear();
+          input.clear();
+          std::getline( file, line );
+          input.str(line);
+        }
+
+        if ( ( count ) != size_ ) {
+          std::cout << "El numero de nodos es erroneo" << std::endl;
+          std::cin.get();
+        }
+
+        index_set();
+      break;
+    }
+  }   
+
 }
 
 
