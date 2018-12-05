@@ -182,11 +182,18 @@ void automata_t::important_nodes( void ) {
 
   for (int inx = 0; inx < set_index_.size(); ++inx ) {
     node = node_t(*set_index_[inx]);
-
-    if ( !node.is_death() || node.is_last() )
-      imp.push_back(inx);
-    else
-      notimp.push_back(inx);
+    static bool check = true;
+    if (!node.is_last()) {
+      check = false;
+      for ( auto inx2 : node.get_succesors() ) {
+        if ( inx2.get_inx() !=  '~' ) {
+          check = true;
+          break;
+        }
+      }
+    }
+    if ( check ) imp.push_back(inx);
+    else notimp.push_back(inx);
       
   }   
 

@@ -17,7 +17,7 @@ std::vector<unsigned> node_t::get_succesors( char input ) const {
   std::vector<unsigned> aux;
 
   for (auto inx: succesors_) {
-    if ( input == inx.get_val() || inx.get_val() == '&')
+    if ( input == inx.get_val() || inx.get_val() == '~')
       aux.push_back( inx.get_inx() );
   }   
   return aux;
