@@ -30,7 +30,11 @@ class automata_t {
   automata_t( void ) {}
   ~automata_t( void ) {}
 
+  //Getters
+  std::set<node_t, SortOrder>& get_nodes( void ) { return nodes_; }
   inline int get_size( void ) { return size_; };
+
+  //Metodos
   bool evaluate( std::string input );
   bool evaluate_nfa( std::string input );
   bool is_dfa( void ) const;
@@ -41,6 +45,13 @@ class automata_t {
   void death_states( void );
   ostream& write_set( std::ostream& os );
 
+  //Sobrecargas de operadores
+  node_t operator[] ( unsigned pos ) { return node_t( *set_index_[ pos ] ); }
+  node_t operator[] ( unsigned pos ) const { return node_t( *set_index_[ pos ] ); }
+  automata_t& operator+= ( const node_t& b ) { 
+    this->get_nodes().insert(b); 
+    return *this;
+  }
 
 };
 

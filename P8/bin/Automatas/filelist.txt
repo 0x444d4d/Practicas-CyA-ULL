@@ -1,9 +1,9 @@
+automata.dfa
 DFA0.aut
 DFA0.dfa
 DFA1.dfa
 DFA2.dfa
 DFA3.dfa
-automata.dfa
 filelist.txt
 nfa.aut
 nfa.nfa

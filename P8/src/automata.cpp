@@ -74,7 +74,8 @@ void automata_t::load_data( std::string file_name ) {
             }
 
           }
-          nodes_.insert( node_t( 0, end, node, suc ) );
+          *this+=node_t( 0, end, node, suc );
+
           suc.clear();
 
           line.clear();
@@ -92,7 +93,6 @@ void automata_t::load_data( std::string file_name ) {
       break;
     }
   }   
-
 }
 
 
@@ -122,7 +122,8 @@ bool automata_t::evaluate( std::string input ) {
 
     if ( inx == unsigned( -1 ) || node_t(*( set_index_[inx] ) ).is_death() ) return false;
   }
-  return node_t( *set_index_[inx] ).is_last();
+  //return node_t( *set_index_[inx] ).is_last();
+  return (*this)[inx].is_last();
 }
 
 
@@ -131,7 +132,7 @@ bool automata_t::evaluate_nfa( std::string input ) {
   evaluate_nfa( input, last, init_ );
 
   for (auto pos : last ) {
-    if ( node_t(*(set_index_[pos])).is_last() ) {
+    if ( (*this)[ pos ].is_last() ) {
       return true;
     } 
   }   
@@ -171,7 +172,7 @@ void automata_t::death_states( void ) {
 bool automata_t::is_dfa( void ) const {
   for (int inx = 0 ; inx < set_index_.size(); ++inx) {
     for (auto it = languaje_.begin(); it != languaje_.end(); ++it )
-      if ( node_t(*set_index_[inx]).output_degree( *it ) != 1) return false;
+      if ( (*this)[ inx ].output_degree( *it ) != 1) return false;
   }   
   return true;
 }
@@ -181,7 +182,7 @@ void automata_t::important_nodes( void ) {
   node_t node;
 
   for (int inx = 0; inx < set_index_.size(); ++inx ) {
-    node = node_t(*set_index_[inx]);
+    node = (*this)[ inx ];
     static bool check = true;
     if (!node.is_last()) {
       check = false;
