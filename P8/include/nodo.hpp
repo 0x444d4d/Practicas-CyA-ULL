@@ -30,9 +30,9 @@ class node_t {
   ~node_t( void ) {}
 
   //Metodos
-  unsigned get_node( void ) const { return node_; }
-  bool is_last( void ) { return ending_; }
-  vector_n get_succesors( void ) const { return succesors_; }
+  inline unsigned get_node( void ) const { return node_; }
+  inline bool is_last( void ) { return ending_; }
+  inline vector_n get_succesors( void ) const { return succesors_; }
 
 
   unsigned output_degree( char input ) const;

@@ -1,16 +1,20 @@
+
 #include <iostream>
 #include <cstdlib>
 #include "../include/automata.hpp"
 #include "../include/filelist.hpp"
+#include "../include/grammar.hpp"
 const std::string PATH = "./Automatas/";
 
 void print_menu( void );
 
 int main( void ) {
   cya::automata_t aut;
+  cya::grammar_t gr;
   std::string cadena;
   short opt;
   listaficheros lista( PATH, ".aut" );
+  std::cin.get();
 
 
   while(true) {
@@ -35,6 +39,9 @@ int main( void ) {
         std::cin.get();
 
         if (pos) aut.load_data( PATH + ( lista[ pos ] ) );
+        gr.build_from_dfa( aut );
+        gr.write( std::cout );
+        std::cin.get();
         break;
 
       case 2:

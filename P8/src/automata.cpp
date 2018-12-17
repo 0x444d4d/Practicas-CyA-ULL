@@ -54,8 +54,8 @@ void automata_t::load_data( std::string file_name ) {
       break;
 
       case 2:
-        int count = 0;
-        int count2;
+        unsigned count = 0;
+        unsigned count2;
 
         while ( input >> node >> end >> tran ) {
           ++count;
@@ -64,7 +64,7 @@ void automata_t::load_data( std::string file_name ) {
           while ( input >> aux.get_val() >> aux.get_inx() ) {
 
             if ( count2++ < tran ) {
-              languaje_.insert( aux.get_val() );
+              alphabet_.insert( aux.get_val() );
               suc.push_back( aux );
             } 
             else {
@@ -97,9 +97,7 @@ void automata_t::load_data( std::string file_name ) {
 
 
 void automata_t::index_set( void ) {
-  auto it = nodes_.begin();
-
-  for ( it; it != nodes_.end() ; ++it) {
+  for ( auto it = nodes_.begin(); it != nodes_.end() ; ++it) {
     set_index_.push_back( it );
   }   
 }
@@ -170,8 +168,8 @@ void automata_t::death_states( void ) {
 
 
 bool automata_t::is_dfa( void ) const {
-  for (int inx = 0 ; inx < set_index_.size(); ++inx) {
-    for (auto it = languaje_.begin(); it != languaje_.end(); ++it )
+  for ( unsigned inx = 0 ; inx < set_index_.size(); ++inx) {
+    for (auto it = alphabet_.begin(); it != alphabet_.end(); ++it )
       if ( (*this)[ inx ].output_degree( *it ) != 1) return false;
   }   
   return true;
@@ -181,7 +179,7 @@ void automata_t::important_nodes( void ) {
   std::vector< int > imp, notimp;
   node_t node;
 
-  for (int inx = 0; inx < set_index_.size(); ++inx ) {
+  for ( unsigned inx = 0; inx < set_index_.size(); ++inx ) {
     node = (*this)[ inx ];
     static bool check = true;
     if (!node.is_last()) {
