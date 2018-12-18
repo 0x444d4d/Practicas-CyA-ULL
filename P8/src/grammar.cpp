@@ -2,8 +2,8 @@
 
 using namespace cya;
 char grammar_t::int_to_case( unsigned number ) {
-  if (number == 0) return 'S';
-  if (number == 20) ++number;
+  if (number == init_) return 'S';
+  if (number < init_) ++number;
   if ( number < 28 ) return char( 'A' + (--number));
   return int(0);
 }
@@ -44,6 +44,7 @@ void grammar_t::build_from_dfa( automata_t dfa ) {
 
   states_ = dfa.get_size();
   for (unsigned inx = 0; inx < states_; ++inx ) {
+    if (inx == dfa.get_init()) init_ = inx;
     for (auto caracter : alphabet_ ) {
       next = dfa[inx].get_next(caracter);
       aux.push_back( make_pair( next, caracter ) );

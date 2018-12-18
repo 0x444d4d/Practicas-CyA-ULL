@@ -33,6 +33,7 @@ struct grSort {
   bool operator() ( const transicion_t& left, const transicion_t& right ){
     if (left.from() == 20) return true;
     if (right.from() == 20) return false;
+    //if (left.from() == init_) return true;
     if (left.from() < right.from()) return true;
     else return false;
   }
@@ -44,6 +45,7 @@ class grammar_t {
   private:
   unsigned size_;
   unsigned states_;
+  unsigned init_;
   std::set<char> alphabet_;
   std::set< transicion_t, grSort > term_;
 
@@ -55,6 +57,10 @@ class grammar_t {
   char int_to_char( unsigned number);
   void build_from_dfa( automata_t dfa );
   std::ostream& write( std::ostream& os );
+
+  ostream& operator<< ( ostream& os ) {
+    return write( os );
+  }
    
 };
 

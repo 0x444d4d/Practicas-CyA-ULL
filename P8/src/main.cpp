@@ -8,13 +8,29 @@ const std::string PATH = "./Automatas/";
 
 void print_menu( void );
 
-int main( void ) {
+int main( int argc, char *argv[] ) {
   cya::automata_t aut;
   cya::grammar_t gr;
   std::string cadena;
   short opt;
   listaficheros lista( PATH, ".aut" );
-  std::cin.get();
+
+
+  if (argc > 1) {
+    std::string ifile;
+    std::ofstream ofile;
+  
+    for (int inx = 1; inx < ( argc - 1 ) ; ++inx ) {
+      if ( std::string(argv[inx] ) == "-i" ) ifile = argv[++inx];
+      if ( std::string(argv[inx] ) == "-o" ) ofile.open(argv[++inx]);
+    }
+  
+    aut.load_data( "DFA0.aut" );
+    gr.build_from_dfa( aut );
+    gr << ofile;
+
+    exit(0);
+  }
 
 
   while(true) {
@@ -39,8 +55,6 @@ int main( void ) {
         std::cin.get();
 
         if (pos) aut.load_data( PATH + ( lista[ pos ] ) );
-        gr.build_from_dfa( aut );
-        gr.write( std::cout );
         std::cin.get();
         break;
 
