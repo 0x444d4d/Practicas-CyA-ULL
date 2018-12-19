@@ -3,6 +3,6 @@ a b
 4
 S A B C 
 S -> aA | bC | 
-A -> aA | bB | 
-B -> aA | bC | 
+A -> aA | bB | ~ | 
+B -> aA | bC | ~ | 
 C -> aC | bC | 

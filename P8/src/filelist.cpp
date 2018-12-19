@@ -27,7 +27,7 @@ void listaficheros::update( std::string key) {
 }
 
 
-string listaficheros::operator[](int index) { 
+string listaficheros::operator[](unsigned index) { 
   if (--index < fileVector_.size()) {
     return fileVector_[index];
   } else return "0";

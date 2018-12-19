@@ -24,7 +24,7 @@ class listaficheros {
 
   void set_path(string path);
   void update( std::string key );
-  string operator[] (int index);
+  string operator[] (unsigned index);
   ostream& write_file(ostream &os); 
   
 

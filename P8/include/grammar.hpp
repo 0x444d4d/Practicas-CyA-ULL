@@ -51,16 +51,18 @@ class grammar_t {
 
 
   public:
-  grammar_t( void ) {};
-  grammar_t( automata_t dfa );
-  char int_to_case( unsigned number);
-  char int_to_char( unsigned number);
-  void build_from_dfa( automata_t dfa );
+  grammar_t( void ) {}; //Constructo por defecto.
+  grammar_t( automata_t dfa ); //Constructor que recibe un automata.
+  ~grammar_t( void ) {}
+  void build_from_dfa( automata_t dfa ); //Método que carga el dfa y lo convierte a gramatica.
   std::ostream& write( std::ostream& os );
 
-  ostream& operator<< ( ostream& os ) {
-    return write( os );
-  }
+  //Sobrecargas.
+  ostream& operator<< ( ostream& os ) { return write( os ); } //Eporta la gramatica a un fichero.
+
+  private:
+  char int_to_case( unsigned number);
+  char int_to_char( unsigned number);
    
 };
 

@@ -1,6 +1,7 @@
 #include "../include/grammar.hpp"
 
 using namespace cya;
+
 char grammar_t::int_to_case( unsigned number ) {
   if (number == init_) return 'S';
   if (number < init_) ++number;
@@ -12,7 +13,6 @@ char grammar_t::int_to_char( unsigned number ) {
   if ( number < 28 ) return char( 'a' + number );
   return int(0);
 }
-
 
 grammar_t::grammar_t( automata_t dfa ) {
 
@@ -50,6 +50,7 @@ void grammar_t::build_from_dfa( automata_t dfa ) {
       aux.push_back( make_pair( next, caracter ) );
       ++size_;
     }   
+    if ( dfa[inx].is_last() ) aux.push_back( make_pair( inx, '~' ) );
     term_.insert( transicion_t( inx, aux));
     aux.clear();
   }   
@@ -78,7 +79,11 @@ std::ostream& grammar_t::write( std::ostream& os ) {
     os << int_to_case( iter.from() );
     os << " " << "-> " ;
     for ( auto tran : iter.to() ) {
-      os << tran.second << int_to_case( tran.first ) << " | ";
+      os << tran.second;
+      if ( tran.second != '~' )
+        os  << int_to_case( tran.first );
+      os << " | ";
+      
     }
     os << std::endl;
   }
